@@ -1,4 +1,3 @@
-import json
 from __init__ import client
 
 mock_props = [{
