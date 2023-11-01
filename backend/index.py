@@ -15,3 +15,7 @@ mock_props = [
 @app.route("/")
 def get_liftInfo():
     return mock_props, 200
+
+@app.route("/", methods=['POST'])
+def receive_liftQueue():
+    return "Data received", 200
