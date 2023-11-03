@@ -23,7 +23,7 @@ def get_liftInfo():
 @app.route("/", methods=['POST'])
 def receive_liftQueue():
     input = request.get_json()
-    # pressed_floors = update_pressed_floors(input, pressed_floors)
+    update_pressed_floors(input, pressed_floors)
     return "Data received", 200
 
 def update_pressed_floors(response_data, pressed_floors):
