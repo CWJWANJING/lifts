@@ -29,9 +29,8 @@ def receive_liftQueue():
 def update_pressed_floors(response_data, pressed_floors):
     lift_num = response_data["lift"]
     pressed_floors[lift_num].append(response_data["pressed"])
-    print(pressed_floors)
     if mock_props[lift_num]["direction"] == "up":
-        pressed_floors = pressed_floors.sort()
+        pressed_floors[lift_num].sort()
     else:
-        pressed_floors = pressed_floors.sort(reverse=True)
+        pressed_floors[lift_num].sort(reverse=True)
     return pressed_floors
