@@ -28,8 +28,8 @@ def test_get(client):
     assert response.status_code == 200
 
 mock_post = {
-    "lift": 0, 
-    "pressed": "1"
+    "lift": 0, # lift index is 0
+    "pressed": [0] # the index of the button
 }
 
 def test_post(client):
@@ -41,19 +41,19 @@ def test_post(client):
 def test_update_pressed_floors():
     responseData = {
         "lift": 0, # lift index is 0
-        "pressed": 1 # the index of the button
+        "pressed": [0] # the index of the button
     }
     pressed_floors = [[2]]
-    expected_data = [[1, 2]]
+    expected_data = [[0, 2]]
     actual_data = update_pressed_floors(responseData, pressed_floors)
     assert actual_data == expected_data
 
 def test_add_pressed_floors():
     responseData = {
         "lift": 0, # lift index is 0
-        "pressed": 1 # the index of the button
+        "pressed": [0] # the index of the button
     }
     pressed_floors = [[]]
-    expected_data = [[1]]
+    expected_data = [[0]]
     actual_data = update_pressed_floors(responseData, pressed_floors)
     assert actual_data == expected_data

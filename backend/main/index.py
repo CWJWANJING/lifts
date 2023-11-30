@@ -23,18 +23,18 @@ def get_liftInfo():
 @app.route("/", methods=['POST'])
 def receive_liftQueue():
     input = request.get_json()
-    # update_pressed_floors(input, pressed_floors)
+    update_pressed_floors(input, pressed_floors)
     return "Data received", 200
 
 def update_pressed_floors(response_data, pressed_floors):
-    print(f"response data{response_data}")
     lift_num = response_data['lift']
-    pressed_floors[lift_num].append(response_data["pressed"])
+    if pressed_floors[lift_num] == []:
+        pressed_floors[lift_num] = list(response_data["pressed"])
+    else:
+        preData = int(str(response_data["pressed"][-1]).strip("[]"))
+        pressed_floors[lift_num].append(preData)
     if mock_props[lift_num]["direction"] == "up":
-        print(lift_num)
-        print(pressed_floors)
         pressed_floors[lift_num].sort()
-        print(pressed_floors[lift_num])
     else:
         pressed_floors[lift_num].sort(reverse=True)
     return pressed_floors
