@@ -21,8 +21,6 @@ mock_props = [{
     "floors": ["2","1","G"]
     }]
 
-pressed_floors = [[2]]
-
 def test_get(client):
     response = client.get("/")
     expected_data = str(mock_props).replace(" ", "").replace("\'", "\"")+"\n"
@@ -45,6 +43,17 @@ def test_update_pressed_floors():
         "lift": 0, # lift index is 0
         "pressed": 1 # the index of the button
     }
+    pressed_floors = [[2]]
     expected_data = [[1, 2]]
+    actual_data = update_pressed_floors(responseData, pressed_floors)
+    assert actual_data == expected_data
+
+def test_add_pressed_floors():
+    responseData = {
+        "lift": 0, # lift index is 0
+        "pressed": 1 # the index of the button
+    }
+    pressed_floors = [[]]
+    expected_data = [[1]]
     actual_data = update_pressed_floors(responseData, pressed_floors)
     assert actual_data == expected_data
