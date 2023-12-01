@@ -38,3 +38,6 @@ def update_pressed_floors(response_data, pressed_floors):
     else:
         pressed_floors[lift_num].sort(reverse=True)
     return pressed_floors
+
+def update_lift(state, t):
+    return [()]
