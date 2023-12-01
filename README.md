@@ -10,7 +10,7 @@
 ```cd``` to the backend directory, and run ```. venv/bin/activate``` first to trigger the virtual environment. Then run ```./bootstrap.sh``` to start the backend.
 
 # To run the tests for backend:
-Make sure you are in the virtual environment and then run ```./tests/test.sh```.
+Make sure you are in the virtual environment and then run ```./tests/test.sh``` or ```pytest```.
 
 # TODO:
 * pass prop into POST body.
