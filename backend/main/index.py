@@ -15,9 +15,14 @@ mock_props = [
 
 pressed_floors = [[] for _ in range(len(mock_props))] # idx corresponds to the idx of the lift too
 
-last_called = 0
+t = 0
+
+state = [(2, [1])]
+
 @app.route("/")
 def get_liftInfo():
+    last_updated = time.time() - t
+    update_lift(state, t, last_updated)
     return mock_props, 200
 
 @app.route("/", methods=['POST'])
@@ -39,5 +44,13 @@ def update_pressed_floors(response_data, pressed_floors):
         pressed_floors[lift_num].sort(reverse=True)
     return pressed_floors
 
-def update_lift(state, t):
+def update_lift(state, t, last_updated):
+    TIMETOFLOOR = 5 # sec
+    while t > 0:
+        for i in range(len(state)):
+            if len(state[i]) != 0:
+                state[i][0] = state[i][1][-1]
+                del state[i][1][-1]
+                t -= TIMETOFLOOR
+    t = time.time() - last_updated
     return [()]
