@@ -13,5 +13,6 @@
 Make sure you are in the virtual environment and then run ```./tests/test.sh``` or ```pytest```.
 
 # TODO:
-* pass prop into POST body.
 * update elevator (pos, time)
+* store pressed_floor info into the state variable - ```[(lift1CurrFloor, lift1Queue), (lift2CurrFloor, lift2Queue)]```
+* pass prop into POST body.
