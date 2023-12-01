@@ -1,5 +1,5 @@
 import pytest
-from main.index import app, update_pressed_floors
+from main.index import app, update_pressed_floors, update_lift
 import time
 
 @pytest.fixture
@@ -61,8 +61,9 @@ def test_add_pressed_floors():
 
 def test_update_lift():
     state = [(2, [1])] # [(currFloor, queue)]
-    actual_queue = update_lift()
+    t = 0
+    actual_state = update_lift(state, t)
     liftOperateTime = 3 # sec
     time.sleep(liftOperateTime)
-    expected_queue = [[]]
-    assert actual_queue == expected_queue
+    expected_state = [()]
+    assert actual_state == expected_state
