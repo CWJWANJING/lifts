@@ -11,3 +11,7 @@
 
 # To run the tests for backend:
 Make sure you are in the virtual environment and then run ```./tests/test.sh```.
+
+# TODO:
+* pass prop into POST body.
+* update elevator (pos, time)
