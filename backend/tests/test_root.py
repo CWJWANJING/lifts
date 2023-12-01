@@ -44,8 +44,8 @@ def test_update_pressed_floors():
         "lift": 0, # lift index is 0
         "pressed": [0] # the index of the button
     }
-    pressed_floors = [[2]]
-    expected_data = [[0, 2]]
+    pressed_floors = [[1]]
+    expected_data = [[0, 1]]
     actual_data = update_pressed_floors(responseData, pressed_floors)
     assert actual_data == expected_data
 
