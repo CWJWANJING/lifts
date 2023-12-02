@@ -17,7 +17,7 @@ pressed_floors = [[] for _ in range(len(mock_props))] # idx corresponds to the i
 
 t = 0
 
-state = [(2, [1])]
+state = [[2, [1]]]
 
 @app.route("/")
 def get_liftInfo():
@@ -53,4 +53,4 @@ def update_lift(state, t, last_updated):
                 del state[i][1][-1]
                 t -= TIMETOFLOOR
     t = time.time() - last_updated
-    return [()]
+    return state
