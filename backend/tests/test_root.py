@@ -60,11 +60,11 @@ def test_add_pressed_floors():
     assert actual_data == expected_data
 
 def test_update_lift():
-    state = [(2, [1])] # [(currFloor, queue)]
-    t = 0
+    state = [[2, [1]]] # [[[currFloor], [queue]]]
+    t = 3
     last_updated = 0
     actual_state = update_lift(state, t, last_updated)
     liftOperateTime = 3 # sec
     time.sleep(liftOperateTime)
-    expected_state = [()]
+    expected_state = [[1, []]]
     assert actual_state == expected_state
