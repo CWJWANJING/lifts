@@ -1,5 +1,5 @@
 import pytest
-from main.index import app, update_pressed_floors, update_lift
+from main.index import app, update_pressed_floors, update_lift, get_next_lift
 import time
 
 @pytest.fixture
@@ -68,3 +68,27 @@ def test_update_lift():
     time.sleep(liftOperateTime)
     expected_state = [[1, []]]
     assert actual_state == expected_state
+
+def test_get_next_lift_only_one_lift():
+    state = [[2, [1]]] # [[[currFloor], [queue]]]
+    people_at_floor = 1
+    actual_result = 0
+    expected_result = get_next_lift(state, mock_props, people_at_floor)
+    assert actual_result == expected_result
+
+def test_get_next_lift_more_than_one_lift():
+    mock_props = [{
+        "currFloor": "G", 
+        "direction": "up", 
+        "floors": ["2","1","G"]
+    },
+    {
+        "currFloor": "2", 
+        "direction": "down", 
+        "floors": ["2","1","G"]
+    }]
+    people_at_floor = 0 # index 0 - floor 2
+    state = [[2, [1]], [1, [2]]] # [[[currFloor], [queue]]]
+    actual_result = 0
+    expected_result = get_next_lift(state, mock_props, people_at_floor)
+    assert actual_result == expected_result
