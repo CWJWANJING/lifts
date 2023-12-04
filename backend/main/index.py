@@ -1,16 +1,30 @@
 from flask import Flask, request
 from flask_cors import CORS
 import time
+from dataclasses import dataclass, asdict
+import dataclasses
+import json
+from typing import List
 
 app = Flask(__name__)
 CORS(app)
 
+@dataclass
+class liftInfo:
+    floors: List[str]
+    currFloor: str
+    direction: str
+    queue: List[str]
+
+lift_prop = liftInfo(
+    ["2", "1", "G"],
+    "G",
+    "up",
+    []
+)
+
 mock_props = [
-    {
-        "floors": ["2", "1", "G"],
-        "currFloor": "G",
-        "direction": "up"
-     }
+    json.dumps(asdict(lift_prop))
 ]
 
 pressed_floors = [[] for _ in range(len(mock_props))] # idx corresponds to the idx of the lift too
