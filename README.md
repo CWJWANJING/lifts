@@ -14,6 +14,7 @@ Make sure you are in the virtual environment and then run ```./tests/test.sh``` 
 
 # TODO:
 * check update_lift (pos, time) logic - continue, more test cases
+* write get_next_lift method and debug
 * refactor state into a dataclass. e.g. state[0].cur_floor
 * store pressed_floor info into the state variable - ```[(lift1CurrFloor, lift1Queue), (lift2CurrFloor, lift2Queue)]```
 * pass prop into POST body.
