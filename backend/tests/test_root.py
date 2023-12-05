@@ -18,8 +18,8 @@ def client():
 
 def test_get(client):
     response = client.get("/")
-    expected_data = str(mock_props).replace("\'", "\"")+"\n"
-    assert response.data.decode("utf-8").replace("\\", "") == expected_data
+    expected_data = str(mock_props)
+    assert response.data.decode("utf-8") == expected_data
     assert response.status_code == 200
 
 mock_post = {
@@ -38,9 +38,10 @@ def test_update_pressed_floors():
         "lift": 0, # lift index is 0
         "pressed": [0] # the index of the button
     }
-    pressed_floors = [[1]]
-    expected_data = [[0, 1]]
-    actual_data = update_pressed_floors(responseData, pressed_floors)
+    mock_props[0].queue = [1]
+    expected_data = mock_props
+    expected_data[0].queue = [0, 1]
+    actual_data = update_pressed_floors(responseData, mock_props)
     assert actual_data == expected_data
 
 def test_add_pressed_floors():
