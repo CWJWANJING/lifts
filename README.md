@@ -13,7 +13,8 @@
 Make sure you are in the virtual environment and then run ```./tests/test.sh``` or ```pytest```.
 
 # TODO:
-* update methods to match the new data structure
+* update methods to match the new data structure - continue (get_next_lift)
+* need to get rid of state
 * check update_lift (pos, time) logic - continue, more test cases
 * write get_next_lift method and debug
 * store pressed_floor info into the state variable - ```[(lift1CurrFloor, lift1Queue), (lift2CurrFloor, lift2Queue)]```
