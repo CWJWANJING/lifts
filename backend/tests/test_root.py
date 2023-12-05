@@ -1,5 +1,5 @@
 import pytest
-from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props
+from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props, liftInfo
 import time
 
 @pytest.fixture
@@ -49,9 +49,10 @@ def test_add_pressed_floors():
         "lift": 0, # lift index is 0
         "pressed": [0] # the index of the button
     }
-    pressed_floors = [[]]
-    expected_data = [[0]]
-    actual_data = update_pressed_floors(responseData, pressed_floors)
+    mock_props[0].queue = []
+    expected_data = mock_props
+    expected_data[0].queue = [0]
+    actual_data = update_pressed_floors(responseData, mock_props)
     assert actual_data == expected_data
 
 def test_update_lift():
@@ -65,25 +66,42 @@ def test_update_lift():
     assert actual_state == expected_state
 
 def test_get_next_lift_only_one_lift():
-    state = [[2, [1]]] # [[[currFloor], [queue]]]
-    people_at_floor = 1
-    actual_result = 0
-    expected_result = get_next_lift(state, mock_props, people_at_floor)
+    lift_prop = liftInfo(
+        ["2", "1", "G"],
+        "G",
+        "up",
+        [1]
+    )
+    mock_props = [
+        lift_prop
+    ]
+    people_at_floor = 1 # indedx 1, floor 1
+    des_direction = "up"
+    expected_result = 0
+    actual_result = get_next_lift(mock_props, people_at_floor, des_direction)
     assert actual_result == expected_result
 
 def test_get_next_lift_more_than_one_lift():
-    mock_props = [{
-        "currFloor": "G", 
-        "direction": "up", 
-        "floors": ["2","1","G"]
-    },
-    {
-        "currFloor": "2", 
-        "direction": "down", 
-        "floors": ["2","1","G"]
-    }]
-    people_at_floor = 0 # index 0 - floor 2
-    state = [[2, [1]], [1, [2]]] # [[[currFloor], [queue]]]
-    actual_result = 0
-    expected_result = get_next_lift(state, mock_props, people_at_floor)
+    lift_prop1 = liftInfo(
+        ["2", "1", "G"],
+        "G",
+        "up",
+        [1]
+    )
+    lift_prop2 = liftInfo(
+        ["2", "1", "G"],
+        "1",
+        "down",
+        [2]
+    )
+
+    mock_props = [
+        lift_prop1,
+        lift_prop2
+    ]
+
+    people_at_floor = 0 # index 0 -> floor 2
+    des_direction = "down"
+    expected_result = 0
+    actual_result = get_next_lift(mock_props, people_at_floor, des_direction)
     assert actual_result == expected_result
