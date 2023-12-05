@@ -1,5 +1,5 @@
 import pytest
-from main.index import app, update_pressed_floors, update_lift, get_next_lift
+from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props
 import time
 
 @pytest.fixture
@@ -16,16 +16,10 @@ def client():
 
     yield client
 
-mock_props = [{
-    "currFloor": "G", 
-    "direction": "up", 
-    "floors": ["2","1","G"]
-    }]
-
 def test_get(client):
     response = client.get("/")
-    expected_data = str(mock_props).replace(" ", "").replace("\'", "\"")+"\n"
-    assert response.data.decode("utf-8") == expected_data
+    expected_data = str(mock_props).replace("\'", "\"")+"\n"
+    assert response.data.decode("utf-8").replace("\\", "") == expected_data
     assert response.status_code == 200
 
 mock_post = {
