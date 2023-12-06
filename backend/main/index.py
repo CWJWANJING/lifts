@@ -30,12 +30,10 @@ mock_props = [
 
 t = 0
 
-state = [[2, [1]]]
-
 @app.route("/")
 def get_liftInfo():
     last_updated = time.time() - t
-    update_lift(state, t, last_updated)
+    update_lift(mock_props, t, last_updated)
     res_data = json.dumps([asdict(lift_prop)])
     return res_data, 200
 
@@ -59,16 +57,16 @@ def update_pressed_floors(response_data, mock_props):
         mock_props[lift_num].queue.sort(reverse=True)
     return mock_props
 
-def update_lift(state, t, last_updated):
+def update_lift(mock_props, t, last_updated):
     TIMETOFLOOR = 5 # sec
     while t > 0:
-        for i in range(len(state)):
-            if len(state[i]) != 0:
-                state[i][0] = state[i][1][-1]
-                del state[i][1][-1]
+        for i in range(len(mock_props)):
+            last_floor = mock_props[i].queue[-1]
+            if len(mock_props[i].queue) != 0:
+                mock_props[i].queue.remove(last_floor)
                 t -= TIMETOFLOOR
     t = time.time() - last_updated
-    return state
+    return mock_props
 
 def get_next_lift(mock_props, people_at_floor):
     if len(mock_props) == 1:
