@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_cors import CORS
 import time
 from dataclasses import dataclass, asdict
-import dataclasses
 import json
 from typing import List
 
@@ -37,8 +36,8 @@ state = [[2, [1]]]
 def get_liftInfo():
     last_updated = time.time() - t
     update_lift(state, t, last_updated)
-    send_data = json.dumps([dataclasses.asdict(lift_prop)])
-    return send_data, 200
+    res_data = json.dumps([asdict(lift_prop)])
+    return res_data, 200
 
 @app.route("/", methods=['POST'])
 def receive_liftQueue():
@@ -71,21 +70,21 @@ def update_lift(state, t, last_updated):
     t = time.time() - last_updated
     return state
 
-# def get_next_lift(mock_props, people_at_floor, des_direction):
-#     if len(mock_props) == 1:
-#         return 0
-#     next_lift = 0
-#     min_distance = float('inf')
+def get_next_lift(mock_props, people_at_floor):
+    if len(mock_props) == 1:
+        return 0
+    next_lift = 0
+    min_distance = float('inf')
 
-#     for lift in mock_props:
-#         if lift.direction == "up" and people_at_floor >= lift.cur_floor:
-#             distance = people_at_floor - lift.cur_floor
-#         elif lift.direction == "down" and people_at_floor <= lift.cur_floor:
-#             distance = lift.cur_floor - people_at_floor
-#         else:
-#             distance = abs(people_at_floor - lift.cur_floor)
+    for lift in mock_props:
+        if lift.direction == "up" and people_at_floor >= lift.cur_floor:
+            distance = people_at_floor - lift.cur_floor
+        elif lift.direction == "down" and people_at_floor <= lift.cur_floor:
+            distance = lift.cur_floor - people_at_floor
+        else:
+            distance = abs(people_at_floor - lift.cur_floor)
         
-#         if distance < min_distance:
-#             min_distance = distance
-#             next_lift = mock_props.index(lift)
-#     return next_lift
+        if distance < min_distance:
+            min_distance = distance
+            next_lift = mock_props.index(lift)
+    return next_lift
