@@ -58,14 +58,23 @@ def test_add_pressed_floors():
     assert actual_data == expected_data
 
 def test_update_lift():
-    state = [[2, [1]]] # [[[currFloor], [queue]]]
+    lift_prop = liftInfo(
+        [2, 1, 0],
+        0,
+        "up",
+        [1]
+    )
+    mock_props = [
+        lift_prop
+    ]
     t = 3
     last_updated = 0
-    actual_state = update_lift(state, t, last_updated)
+    actual_data = update_lift(mock_props, t, last_updated)
     liftOperateTime = 3 # sec
     time.sleep(liftOperateTime)
-    expected_state = [[1, []]]
-    assert actual_state == expected_state
+    expected_data = mock_props
+    expected_data[0].queue = []
+    assert actual_data == expected_data
 
 def test_get_next_lift_only_one_lift():
     lift_prop = liftInfo(
@@ -78,9 +87,8 @@ def test_get_next_lift_only_one_lift():
         lift_prop
     ]
     people_at_floor = 1 
-    des_direction = "up"
     expected_result = 0
-    actual_result = get_next_lift(mock_props, people_at_floor, des_direction)
+    actual_result = get_next_lift(mock_props, people_at_floor)
     assert actual_result == expected_result
 
 def test_get_next_lift_more_than_one_lift():
