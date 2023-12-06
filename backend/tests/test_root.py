@@ -100,8 +100,8 @@ def test_get_next_lift_more_than_one_lift():
         lift_prop2
     ]
 
-    people_at_floor = 0 # index 0 -> floor 2
-    des_direction = "down"
-    expected_result = 0
+    people_at_floor = 2 # index 0 -> floor G
+    des_direction = "up"
+    expected_result = 1
     actual_result = get_next_lift(mock_props, people_at_floor, des_direction)
     assert actual_result == expected_result
