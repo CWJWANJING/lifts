@@ -37,7 +37,8 @@ state = [[2, [1]]]
 def get_liftInfo():
     last_updated = time.time() - t
     update_lift(state, t, last_updated)
-    return str(mock_props), 200
+    send_data = json.dumps([dataclasses.asdict(lift_prop)])
+    return send_data, 200
 
 @app.route("/", methods=['POST'])
 def receive_liftQueue():
