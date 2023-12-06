@@ -1,6 +1,8 @@
 import pytest
 from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props, liftInfo
 import time
+from dataclasses import dataclass, asdict
+import json
 
 @pytest.fixture
 def client():
@@ -18,7 +20,7 @@ def client():
 
 def test_get(client):
     response = client.get("/")
-    expected_data = str(mock_props)
+    expected_data = json.dumps([asdict(x) for x in mock_props])
     assert response.data.decode("utf-8") == expected_data
     assert response.status_code == 200
 
