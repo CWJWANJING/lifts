@@ -69,15 +69,15 @@ def test_update_lift():
 
 def test_get_next_lift_only_one_lift():
     lift_prop = liftInfo(
-        ["2", "1", "G"],
-        "G",
+        [2, 1, 0],
+        0,
         "up",
         [1]
     )
     mock_props = [
         lift_prop
     ]
-    people_at_floor = 1 # indedx 1, floor 1
+    people_at_floor = 1 
     des_direction = "up"
     expected_result = 0
     actual_result = get_next_lift(mock_props, people_at_floor, des_direction)
@@ -85,16 +85,16 @@ def test_get_next_lift_only_one_lift():
 
 def test_get_next_lift_more_than_one_lift():
     lift_prop1 = liftInfo(
-        ["2", "1", "G"],
-        "G",
+        [2, 1, 0],
+        0,
         "up",
         [1]
     )
     lift_prop2 = liftInfo(
-        ["2", "1", "G"],
-        "1",
+        [2, 1, 0],
+        1,
         "down",
-        [2]
+        [0]
     )
 
     mock_props = [
@@ -102,8 +102,8 @@ def test_get_next_lift_more_than_one_lift():
         lift_prop2
     ]
 
-    people_at_floor = 2 # index 0 -> floor G
-    des_direction = "up"
+    people_at_floor = 1
+    des_direction = "down"
     expected_result = 1
     actual_result = get_next_lift(mock_props, people_at_floor, des_direction)
     assert actual_result == expected_result
