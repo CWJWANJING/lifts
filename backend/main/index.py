@@ -11,14 +11,16 @@ CORS(app)
 
 @dataclass
 class liftInfo:
-    floors: List[str]
-    currFloor: str
+    floors: List[int]
+    cur_floor: int
     direction: str
-    queue: List[str]
+    queue: List[int]
+
+floors = [2, 1, 0] # all lifts go to the same floors
 
 lift_prop = liftInfo(
-    ["2", "1", "G"],
-    "G",
+    floors,
+    0,
     "up",
     []
 )
@@ -68,14 +70,21 @@ def update_lift(state, t, last_updated):
     t = time.time() - last_updated
     return state
 
-def get_next_lift(state, mock_props, people_at_floor):
-    if len(state) == 1:
-        return 0
-    # state = [[2, [1]]]
-    next_lift = 0
-    lenQ = len(mock_props["floors"])
-    for i in range(len(state)):
-        if len(state[i][1]) < lenQ:
-            lenQ = state[i][1]
-            next_lift = i
-    return next_lift
+# def get_next_lift(mock_props, people_at_floor, des_direction):
+#     if len(mock_props) == 1:
+#         return 0
+#     next_lift = 0
+#     min_distance = float('inf')
+
+#     for lift in mock_props:
+#         if lift.direction == "up" and people_at_floor >= lift.cur_floor:
+#             distance = people_at_floor - lift.cur_floor
+#         elif lift.direction == "down" and people_at_floor <= lift.cur_floor:
+#             distance = lift.cur_floor - people_at_floor
+#         else:
+#             distance = abs(people_at_floor - lift.cur_floor)
+        
+#         if distance < min_distance:
+#             min_distance = distance
+#             next_lift = mock_props.index(lift)
+#     return next_lift
