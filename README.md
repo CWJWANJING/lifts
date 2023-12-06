@@ -16,8 +16,8 @@ Make sure you are in the virtual environment and then run ```./tests/test.sh``` 
 The next lift is simply determined by the distance between the lifts and the floor where the people is on right now. It does not consider cases like the waiting time and time for people to reach the destination floor.
 
 # TODO:
-* need to get rid of state
 * check update_lift (pos, time) logic - continue, more test cases
-* write get_next_lift method and debug
-* store pressed_floor info into the state variable - ```[(lift1CurrFloor, lift1Queue), (lift2CurrFloor, lift2Queue)]```
+* Frontend - when lift arrived, button change back color and change current floor text
+* check update_pressed_floors is working
 * pass prop into POST body.
+* check when there's more than one lift
