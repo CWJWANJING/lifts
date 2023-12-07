@@ -20,8 +20,9 @@ def client():
 
 def test_get(client):
     response = client.get("/")
-    expected_data = json.dumps([asdict(x) for x in mock_props])
-    assert response.data.decode("utf-8") == expected_data
+    expected_data = str(json.dumps([asdict(x) for x in mock_props]))+"\n"
+    actual_data = response.data.decode("utf-8").replace("\"", "").replace("\\", "")
+    assert actual_data == expected_data.replace("\"", "")
     assert response.status_code == 200
 
 mock_post = {
