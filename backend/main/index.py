@@ -85,4 +85,4 @@ def get_next_lift(mock_props, people_at_floor):
         if distance < min_distance:
             min_distance = distance
             next_lift = mock_props.index(lift)
-    return next_lift
+    return next_lift+1 # return the lift number instead of index
