@@ -43,7 +43,11 @@ def get_liftInfo():
 def receive_liftQueue():
     input = request.get_json()
     update_pressed_floors(input, mock_props)
-    return "Data received", 200
+    res = {
+            "code": 200,
+            "message": "Data received"
+    }
+    return res
 
 def update_pressed_floors(response_data, mock_props):
     lift_num = response_data['lift']
