@@ -33,9 +33,11 @@ mock_post = {
 
 def test_post(client):
     response = client.post("/", json=mock_post)
-    expected_data = "Data received"
-    assert response.data.decode("utf-8") == expected_data
-    assert response.status_code == 200
+    expected_data = {
+            "code": 200,
+            "message": "Data received"
+    }
+    assert json.loads(response.data.decode('utf-8')) == expected_data
 
 def test_update_pressed_floors():
     responseData = {
@@ -59,7 +61,7 @@ def test_add_pressed_floors():
     actual_data = update_pressed_floors(responseData, mock_props)
     assert actual_data == expected_data
 
-def test_update_lift():
+def test_update_lift_when_one_floor_in_queue():
     lift_prop = liftInfo(
         [2, 1, 0],
         0,
@@ -76,6 +78,25 @@ def test_update_lift():
     time.sleep(liftOperateTime)
     expected_data = mock_props
     expected_data[0].queue = []
+    assert actual_data == expected_data
+
+def test_update_lift_when_two_floors_in_queue():
+    lift_prop = liftInfo(
+        [2, 1, 0],
+        0,
+        "up",
+        [2, 1]
+    )
+    mock_props = [
+        lift_prop
+    ]
+    t = 3
+    last_updated = 0
+    actual_data = update_lift(mock_props, t, last_updated)
+    liftOperateTime = 3 # sec
+    time.sleep(liftOperateTime)
+    expected_data = mock_props
+    expected_data[0].queue = [2]
     assert actual_data == expected_data
 
 def test_get_next_lift_only_one_lift():
