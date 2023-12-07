@@ -39,14 +39,25 @@ def test_post(client):
     }
     assert json.loads(response.data.decode('utf-8')) == expected_data
 
-def test_update_pressed_floors():
+def test_update_pressed_floors_append_queue():
     responseData = {
         "lift": 0, # lift index is 0
         "pressed": [0] # the index of the button
     }
-    mock_props[0].queue = [1]
+    mock_props[0].queue = [0, 1]
     expected_data = mock_props
     expected_data[0].queue = [0, 1]
+    actual_data = update_pressed_floors(responseData, mock_props)
+    assert actual_data == expected_data
+
+def test_update_pressed_floors_sort_queue():
+    responseData = {
+        "lift": 0, # lift index is 0
+        "pressed": [1] # the index of the button
+    }
+    mock_props[0].queue = [1, 2]
+    expected_data = mock_props
+    expected_data[0].queue = [2, 1]
     actual_data = update_pressed_floors(responseData, mock_props)
     assert actual_data == expected_data
 
