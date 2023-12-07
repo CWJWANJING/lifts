@@ -91,7 +91,7 @@ def test_get_next_lift_only_one_lift():
     actual_result = get_next_lift(mock_props, people_at_floor)
     assert actual_result == expected_result
 
-def test_get_next_lift_more_than_one_lift():
+def test_get_next_lift_when_two_lifts():
     lift_prop1 = liftInfo(
         [2, 1, 0],
         0,
@@ -111,6 +111,68 @@ def test_get_next_lift_more_than_one_lift():
     ]
 
     people_at_floor = 1
-    expected_result = 1
+    expected_result = 2
+    actual_result = get_next_lift(mock_props, people_at_floor)
+    assert actual_result == expected_result
+
+def test_get_next_lift_when_three_lifts_two_lifts_the_same():
+    lift_prop1 = liftInfo(
+        [2, 1, 0],
+        0,
+        "up",
+        [1]
+    )
+    lift_prop2 = liftInfo(
+        [2, 1, 0],
+        1,
+        "down",
+        [0]
+    )
+    lift_prop3 = liftInfo(
+        [2, 1, 0],
+        1,
+        "down",
+        [0]
+    )
+
+    mock_props = [
+        lift_prop1,
+        lift_prop2,
+        lift_prop3
+    ]
+
+    people_at_floor = 1
+    expected_result = 2
+    actual_result = get_next_lift(mock_props, people_at_floor)
+    assert actual_result == expected_result
+
+def test_get_next_lift_when_three_lifts():
+    lift_prop1 = liftInfo(
+        [2, 1, 0],
+        0,
+        "up",
+        [1]
+    )
+    lift_prop2 = liftInfo(
+        [2, 1, 0],
+        1,
+        "down",
+        [0]
+    )
+    lift_prop3 = liftInfo(
+        [2, 1, 0],
+        2,
+        "down",
+        [1]
+    )
+
+    mock_props = [
+        lift_prop1,
+        lift_prop2,
+        lift_prop3
+    ]
+
+    people_at_floor = 1
+    expected_result = 2
     actual_result = get_next_lift(mock_props, people_at_floor)
     assert actual_result == expected_result
