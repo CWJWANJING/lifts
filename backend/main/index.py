@@ -51,12 +51,13 @@ def receive_liftQueue():
 
 def update_pressed_floors(response_data, mock_props):
     lift_num = response_data['lift']
-    print(mock_props)
-    if mock_props[lift_num].queue == []:
+    if len(mock_props[lift_num].queue) == 0:
         mock_props[lift_num].queue = list(response_data["pressed"])
     else:
-        preData = int(str(response_data["pressed"][-1]).strip("[]"))
-        mock_props[lift_num].queue.append(preData)
+        if response_data["pressed"] != []:
+            preData = int(str(response_data["pressed"][-1]).strip("[]"))
+            mock_props[lift_num].queue.append(preData)
+
     if mock_props[lift_num].direction == "up":
         mock_props[lift_num].queue.sort()
     else:
