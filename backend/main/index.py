@@ -33,14 +33,19 @@ t = 0
 @app.route("/")
 def get_liftInfo():
     last_updated = time.time() - t
-    update_lift(mock_props, t, last_updated)
-    res_data = json.dumps([asdict(lift_prop)])
+    pre_data = update_lift(mock_props, t, last_updated)
+    res_data = []
+    print(pre_data)
+    for r in pre_data:
+        print(r)
+        res_data.append(json.dumps(asdict(r)))
+    print(res_data)
     return res_data, 200
 
 @app.route("/", methods=['POST'])
 def receive_liftQueue():
     input = request.get_json()
-    # update_pressed_floors(input, pressed_floors)
+    update_pressed_floors(input, mock_props)
     return "Data received", 200
 
 def update_pressed_floors(response_data, mock_props):
