@@ -35,11 +35,8 @@ def get_liftInfo():
     last_updated = time.time() - t
     pre_data = update_lift(mock_props, t, last_updated)
     res_data = []
-    print(pre_data)
     for r in pre_data:
-        print(r)
-        res_data.append(json.dumps(asdict(r)))
-    print(res_data)
+        res_data.append(asdict(r))
     return res_data, 200
 
 @app.route("/", methods=['POST'])
