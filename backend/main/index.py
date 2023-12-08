@@ -59,9 +59,9 @@ def update_pressed_floors(response_data, mock_props):
             mock_props[lift_num].queue.append(preData)
 
     if mock_props[lift_num].direction == "up":
-        mock_props[lift_num].queue.sort()
-    else:
         mock_props[lift_num].queue.sort(reverse=True)
+    else:
+        mock_props[lift_num].queue.sort()
     return mock_props
 
 def update_lift(mock_props, t, last_updated):
