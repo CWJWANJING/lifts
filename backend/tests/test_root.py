@@ -1,5 +1,5 @@
 import pytest
-from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props, liftInfo
+from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props, liftInfo, TIMETOFLOOR
 import time
 from dataclasses import dataclass, asdict
 import json
@@ -64,7 +64,7 @@ def test_update_pressed_floors_sort_queue():
 def test_add_pressed_floors():
     responseData = {
         "lift": 0, # lift index is 0
-        "pressed": [0] # the index of the button
+        "pressed": [0] 
     }
     mock_props[0].queue = []
     expected_data = mock_props
@@ -82,11 +82,8 @@ def test_update_lift_when_one_floor_in_queue():
     mock_props = [
         lift_prop
     ]
-    t = 3
-    last_updated = 0
-    actual_data = update_lift(mock_props, t, last_updated)
-    liftOperateTime = 3 # sec
-    time.sleep(liftOperateTime)
+    actual_data = update_lift(mock_props, TIMETOFLOOR)
+    time.sleep(TIMETOFLOOR)
     expected_data = mock_props
     expected_data[0].queue = []
     assert actual_data == expected_data
@@ -101,11 +98,8 @@ def test_update_lift_when_two_floors_in_queue():
     mock_props = [
         lift_prop
     ]
-    t = 3
-    last_updated = 0
-    actual_data = update_lift(mock_props, t, last_updated)
-    liftOperateTime = 3 # sec
-    time.sleep(liftOperateTime)
+    actual_data = update_lift(mock_props, TIMETOFLOOR)
+    time.sleep(TIMETOFLOOR)
     expected_data = mock_props
     expected_data[0].queue = [2]
     assert actual_data == expected_data
