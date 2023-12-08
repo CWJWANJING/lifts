@@ -16,8 +16,7 @@ Make sure you are in the virtual environment and then run ```./tests/test.sh``` 
 The next lift is simply determined by the distance between the lifts and the floor where the people is on right now. It does not consider cases like the waiting time and time for people to reach the destination floor.
 
 # TODO:
-* need to keep debugging update_pressed_floors
-* check update_lift (pos, time) logic - continue, more test cases
+* pass updated props from page.js to lift component
 * Frontend - when lift arrived, button change back color and change current floor text
 * pass prop into POST body.
 * check when there's more than one lift
