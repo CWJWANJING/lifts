@@ -4,6 +4,7 @@ import time
 from dataclasses import dataclass, asdict
 import json
 from typing import List
+import threading
 
 app = Flask(__name__)
 CORS(app)
@@ -28,12 +29,11 @@ mock_props = [
     lift_prop
 ]
 
-t = 0
+TIMETOFLOOR = 5 # sec
 
 @app.route("/")
 def get_liftInfo():
-    last_updated = time.time() - t
-    pre_data = update_lift(mock_props, t, last_updated)
+    pre_data = update_lift(mock_props, TIMETOFLOOR)
     res_data = []
     for r in pre_data:
         res_data.append(asdict(r))
@@ -64,15 +64,24 @@ def update_pressed_floors(response_data, mock_props):
         mock_props[lift_num].queue.sort()
     return mock_props
 
-def update_lift(mock_props, t, last_updated):
-    TIMETOFLOOR = 5 # sec
-    while t > 0:
+def update_lift(mock_props, TIMETOFLOOR):
+    # Create an event to signal when the delay is over
+    event = threading.Event()
+
+    # Define a function to remove the end of the list after the delay
+    def remove_end():
+        event.wait(TIMETOFLOOR)
         for i in range(len(mock_props)):
-            last_floor = mock_props[i].queue[-1]
             if len(mock_props[i].queue) != 0:
+                last_floor = mock_props[i].queue[-1]
                 mock_props[i].queue.remove(last_floor)
-                t -= TIMETOFLOOR
-    t = time.time() - last_updated
+
+    # Start a new thread to run the remove_end function
+    thread = threading.Thread(target=remove_end)
+    thread.start()
+
+    # Ensure that the main thread does not wait for the delay
+    event.set()
     return mock_props
 
 def get_next_lift(mock_props, people_at_floor):
