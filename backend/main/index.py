@@ -53,10 +53,19 @@ def update_pressed_floors(response_data, mock_props):
     lift_num = response_data['lift']
     if len(mock_props[lift_num].queue) == 0:
         mock_props[lift_num].queue = list(response_data["pressed"])
+        if len(response_data["pressed"]) == 1 and (response_data["pressed"][0] > mock_props[lift_num].cur_floor):
+                mock_props[lift_num].direction = "up"
+        elif len(response_data["pressed"]) == 1 and (response_data["pressed"][0] < mock_props[lift_num].cur_floor):
+                mock_props[lift_num].direction = "down"
     else:
         if isinstance(response_data["pressed"], list) and response_data["pressed"] != []:
-            preData = int(str(response_data["pressed"][-1]).strip("[]"))
-            mock_props[lift_num].queue.append(preData)
+            if len(response_data["pressed"]) == 1 and (response_data["pressed"][0] > mock_props[lift_num].cur_floor):
+                mock_props[lift_num].direction = "up"
+            elif len(response_data["pressed"]) == 1 and (response_data["pressed"][0] < mock_props[lift_num].cur_floor):
+                mock_props[lift_num].direction = "down"
+            else:
+                preData = int(str(response_data["pressed"][-1]).strip("[]"))
+                mock_props[lift_num].queue.append(preData)
 
     if mock_props[lift_num].direction == "up":
         mock_props[lift_num].queue.sort(reverse=True)
