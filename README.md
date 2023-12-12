@@ -17,5 +17,5 @@ The next lift is simply determined by the distance between the lifts and the flo
 
 # TODO:
 * use get_next_lift
-* pass 'lift index prop' into POST body.
+* updated lift direction
 * check when there's more than one lift
