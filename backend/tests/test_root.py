@@ -139,7 +139,7 @@ def test_get_next_lift_when_two_lifts():
     ]
 
     people_at_floor = 1
-    expected_result = 2
+    expected_result = 1 # index 1 lift 2
     actual_result = get_next_lift(mock_props, people_at_floor)
     assert actual_result == expected_result
 
@@ -170,7 +170,7 @@ def test_get_next_lift_when_three_lifts_two_lifts_the_same():
     ]
 
     people_at_floor = 1
-    expected_result = 2
+    expected_result = 1 # index 1 lift 2
     actual_result = get_next_lift(mock_props, people_at_floor)
     assert actual_result == expected_result
 
@@ -201,6 +201,6 @@ def test_get_next_lift_when_three_lifts():
     ]
 
     people_at_floor = 1
-    expected_result = 2
+    expected_result = 1 # index 1 lift 2
     actual_result = get_next_lift(mock_props, people_at_floor)
     assert actual_result == expected_result
