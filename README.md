@@ -16,6 +16,5 @@ Make sure you are in the virtual environment and then run ```./tests/test.sh``` 
 The next lift is simply determined by the distance between the lifts and the floor where the people is on right now. It does not consider cases like the waiting time and time for people to reach the destination floor.
 
 # TODO:
-* debug frontend POST data test case
 * pass 'lift index prop' into POST body.
 * check when there's more than one lift
