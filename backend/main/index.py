@@ -21,7 +21,7 @@ floors = [2, 1, 0] # all lifts go to the same floors
 lift_prop = liftInfo(
     floors,
     0,
-    "up",
+    "-",
     []
 )
 
@@ -74,6 +74,7 @@ def update_lift(mock_props, TIMETOFLOOR):
         for i in range(len(mock_props)):
             if len(mock_props[i].queue) != 0:
                 last_floor = mock_props[i].queue[-1]
+                mock_props[i].cur_floor = last_floor
                 mock_props[i].queue.remove(last_floor)
 
     # Start a new thread to run the remove_end function
