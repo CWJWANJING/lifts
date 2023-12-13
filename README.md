@@ -13,9 +13,12 @@
 Make sure you are in the virtual environment and then run ```./tests/test.sh``` or ```pytest```.
 
 # The logic
-The next lift is simply determined by the distance between the lifts and the floor where the people is on right now. It does not consider cases like the waiting time and time for people to reach the destination floor.
+User clicked the floor they would like to go, and the button will change color as they click on it. Then after some fixed time the lift will arrive at the destination floor. There are texts displaying which direction are we going and we are currently at which floor.
 
-# TODO:
-* use get_next_lift
-* updated lift direction
-* check when there's more than one lift
+To add more lifts, in the backend folder, file ```index.py```, replicate line 19 (and adjust the field values to your liking) and add the new lift_prop to line 21 ```mock_props```
+
+# The demo
+![the demo]("lift_web_app.mov")
+
+# Self reflection
+I got to practice more React methods, Cypress methods and Pytest. But I need to work on my system design skill.
