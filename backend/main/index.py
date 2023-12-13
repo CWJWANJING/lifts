@@ -18,15 +18,23 @@ class liftInfo:
 
 floors = [2, 1, 0] # all lifts go to the same floors
 
-lift_prop = liftInfo(
+lift_prop1 = liftInfo(
     floors,
     0,
     "-",
     []
 )
 
+lift_prop2 = liftInfo(
+    floors,
+    1,
+    "-",
+    []
+)
+
 mock_props = [
-    lift_prop
+    lift_prop1,
+    lift_prop2
 ]
 
 TIMETOFLOOR = 5 # sec
