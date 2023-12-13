@@ -1,8 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
-import time
 from dataclasses import dataclass, asdict
-import json
 from typing import List
 import threading
 
@@ -10,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 @dataclass
-class liftInfo:
+class LiftInfo:
     floors: List[int]
     cur_floor: int
     direction: str
@@ -18,24 +16,10 @@ class liftInfo:
 
 floors = [2, 1, 0] # all lifts go to the same floors
 
-lift_prop1 = liftInfo(
-    floors,
-    0,
-    "-",
-    []
-)
+lift_prop1 = LiftInfo(floors, 0, "-", [])
+lift_prop2 = LiftInfo(floors, 1, "-", [])
 
-lift_prop2 = liftInfo(
-    floors,
-    1,
-    "-",
-    []
-)
-
-mock_props = [
-    lift_prop1,
-    lift_prop2
-]
+mock_props = [lift_prop1, lift_prop2]
 
 TIMETOFLOOR = 5 # sec
 
@@ -49,12 +33,9 @@ def get_liftInfo():
 
 @app.route("/", methods=['POST'])
 def receive_liftQueue():
-    input = request.get_json()
-    update_pressed_floors(input, mock_props)
-    res = {
-            "code": 200,
-            "message": "Data received"
-    }
+    input_data = request.get_json()
+    update_pressed_floors(input_data, mock_props)
+    res = {"code": 200, "message": "Data received"}
     return res
 
 def update_pressed_floors(response_data, mock_props):
@@ -101,22 +82,3 @@ def update_lift(mock_props, TIMETOFLOOR):
     # Ensure that the main thread does not wait for the delay
     event.set()
     return mock_props
-
-def get_next_lift(mock_props, people_at_floor):
-    if len(mock_props) == 1:
-        return 0
-    next_lift = 0
-    min_distance = float('inf')
-
-    for lift in mock_props:
-        if lift.direction == "up" and people_at_floor >= lift.cur_floor:
-            distance = people_at_floor - lift.cur_floor
-        elif lift.direction == "down" and people_at_floor <= lift.cur_floor:
-            distance = lift.cur_floor - people_at_floor
-        else:
-            distance = abs(people_at_floor - lift.cur_floor)
-        
-        if distance < min_distance:
-            min_distance = distance
-            next_lift = mock_props.index(lift)
-    return next_lift

@@ -1,5 +1,5 @@
 import pytest
-from main.index import app, update_pressed_floors, update_lift, get_next_lift, mock_props, liftInfo, TIMETOFLOOR
+from main.index import app, update_pressed_floors, update_lift, mock_props, LiftInfo, TIMETOFLOOR
 import time
 from dataclasses import dataclass, asdict
 import json
@@ -73,7 +73,7 @@ def test_add_pressed_floors():
     assert actual_data == expected_data
 
 def test_update_lift_when_one_floor_in_queue():
-    lift_prop = liftInfo(
+    lift_prop = LiftInfo(
         [2, 1, 0],
         0,
         "up",
@@ -83,13 +83,14 @@ def test_update_lift_when_one_floor_in_queue():
         lift_prop
     ]
     actual_data = update_lift(mock_props, TIMETOFLOOR)
-    time.sleep(TIMETOFLOOR)
+    # Simulate the delay by directly calling the function that runs after the delay
+    update_lift(mock_props, 0)
     expected_data = mock_props
     expected_data[0].queue = []
     assert actual_data == expected_data
 
 def test_update_lift_when_two_floors_in_queue():
-    lift_prop = liftInfo(
+    lift_prop = LiftInfo(
         [2, 1, 0],
         0,
         "up",
@@ -99,108 +100,8 @@ def test_update_lift_when_two_floors_in_queue():
         lift_prop
     ]
     actual_data = update_lift(mock_props, TIMETOFLOOR)
-    time.sleep(TIMETOFLOOR)
+    # Simulate the delay by directly calling the function that runs after the delay
+    update_lift(mock_props, 0)
     expected_data = mock_props
     expected_data[0].queue = [2]
     assert actual_data == expected_data
-
-def test_get_next_lift_only_one_lift():
-    lift_prop = liftInfo(
-        [2, 1, 0],
-        0,
-        "up",
-        [1]
-    )
-    mock_props = [
-        lift_prop
-    ]
-    people_at_floor = 1 
-    expected_result = 0
-    actual_result = get_next_lift(mock_props, people_at_floor)
-    assert actual_result == expected_result
-
-def test_get_next_lift_when_two_lifts():
-    lift_prop1 = liftInfo(
-        [2, 1, 0],
-        0,
-        "up",
-        [1]
-    )
-    lift_prop2 = liftInfo(
-        [2, 1, 0],
-        1,
-        "down",
-        [0]
-    )
-
-    mock_props = [
-        lift_prop1,
-        lift_prop2
-    ]
-
-    people_at_floor = 1
-    expected_result = 1 # index 1 lift 2
-    actual_result = get_next_lift(mock_props, people_at_floor)
-    assert actual_result == expected_result
-
-def test_get_next_lift_when_three_lifts_two_lifts_the_same():
-    lift_prop1 = liftInfo(
-        [2, 1, 0],
-        0,
-        "up",
-        [1]
-    )
-    lift_prop2 = liftInfo(
-        [2, 1, 0],
-        1,
-        "down",
-        [0]
-    )
-    lift_prop3 = liftInfo(
-        [2, 1, 0],
-        1,
-        "down",
-        [0]
-    )
-
-    mock_props = [
-        lift_prop1,
-        lift_prop2,
-        lift_prop3
-    ]
-
-    people_at_floor = 1
-    expected_result = 1 # index 1 lift 2
-    actual_result = get_next_lift(mock_props, people_at_floor)
-    assert actual_result == expected_result
-
-def test_get_next_lift_when_three_lifts():
-    lift_prop1 = liftInfo(
-        [2, 1, 0],
-        0,
-        "up",
-        [1]
-    )
-    lift_prop2 = liftInfo(
-        [2, 1, 0],
-        1,
-        "down",
-        [0]
-    )
-    lift_prop3 = liftInfo(
-        [2, 1, 0],
-        2,
-        "down",
-        [1]
-    )
-
-    mock_props = [
-        lift_prop1,
-        lift_prop2,
-        lift_prop3
-    ]
-
-    people_at_floor = 1
-    expected_result = 1 # index 1 lift 2
-    actual_result = get_next_lift(mock_props, people_at_floor)
-    assert actual_result == expected_result
