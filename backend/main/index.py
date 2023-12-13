@@ -16,12 +16,11 @@ class LiftInfo:
 
 floors = [2, 1, 0] # all lifts go to the same floors
 
-lift_prop1 = LiftInfo(floors, 0, "-", [])
-lift_prop2 = LiftInfo(floors, 1, "-", [])
+lift_prop1 = LiftInfo(floors, 0, "-", []) # initialise lift
 
-mock_props = [lift_prop1, lift_prop2]
+mock_props = [lift_prop1] # put it into a list
 
-TIMETOFLOOR = 5 # sec
+TIMETOFLOOR = 2 # sec
 
 @app.route("/")
 def get_liftInfo():
