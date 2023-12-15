@@ -19,7 +19,7 @@ User clicked the floor they would like to go, and the button will change color a
 To add more lifts, in the backend folder, file ```index.py```, replicate line 19 (and adjust the field values to your liking) and add the new lift_prop to line 21 ```mock_props```
 
 # The demo
-[the demo](https://youtu.be/ssRi6c8ztoI)
+[the demo](https://youtu.be/5zXMOgTFgh4)
 
 # Self reflection
 I got to practice more React methods, Cypress methods and Pytest. But I need to work on my system design skill.
